@@ -19,4 +19,4 @@ sfsfsd
 sdfsdf
 sfsdf
 
-[link to section](how-to-expose-an-http-rest-resource)
+[link to section](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
