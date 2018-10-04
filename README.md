@@ -9,7 +9,7 @@ It is very easy. just create an entity using JPA @Entity annotation and an repos
 
 
 #### How to expose an HTTP REST resource?
-```
+```java
 public interface PageRepository extends CrudRepository<Page, Long> {
 }
 ```
