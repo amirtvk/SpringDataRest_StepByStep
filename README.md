@@ -4,13 +4,14 @@ Spring Data REST(SDR) is a very nice tool to develop HTTP Resources with minimum
 Spring Data REST is a subproject of Spring data. SDR Analyze your repositories and expose them as REST Endpoint.
 
 
-[link to section](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
+[How to expose an HTTP REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
 
 #### How to expose an HTTP REST resource?
 
-It is very easy. just create an entity using JPA @Entity annotation and an repository interface.
+It is very easy. Just create an entity using JPA @Entity annotation and an repository interface.
 
 
+Page Entity:
 ```java
 @Entity
 @Data
@@ -30,16 +31,16 @@ public class Page {
 
 ```
 
-
-
+Page Repository:
 ```java
 public interface PageRepository extends CrudRepository<Page, Long> {
 }
 ```
 Note that detection of repositories in code is done based on 'RepositoryDiscoveryStrategies'
 we can access to HTTP resource:
-```
+```json
 $curl -X GET http://127.0.0.1:7000/pages
+
 {
   "_embedded" : {
     "pages" : [ ]
