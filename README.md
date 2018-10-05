@@ -1,7 +1,7 @@
 A step by step walk-though guide for developing RESTfull web services using Spring Data Rest.  
 
 Spring Data REST is a very nice tool to develop HTTP Resources with minimum boilerplate code.
-Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your repositories and expose them as REST Endpoint.
+Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your repositories and expose them as a REST Endpoints.
 
 
 [How to expose an HTTP REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
@@ -16,6 +16,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use DELETE method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-delete-method-on-a-repository)
 
+[How to disable a method exposure on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-disable-a-method-exposure-on-a-repository)
 
 
 ### How to expose an HTTP REST resource?
@@ -225,6 +226,31 @@ curl -X DELETE http://127.0.0.1:7000/blogs/4
 You will got a `204` `No Content` response code if server can find and delete the resource.
 
 
+### How to disable a method exposure on a repository?
+
+Sometimes you don't want to expose all methods of a repository to out world. By using `@RestResource(exported = false)` annotation on repository methods you are able to prevent the method to be exported on HTTP.
+
+For example if you don't like to expose 'DELETE' method on HTTP, you have to find the related method (or maybe methods, have a look at official documentation for more details) in repository and annotate the method/methods by
+the @RestResource(exported = false) annotation.
+
+```java
+@RepositoryRestResource(path = "blogs")
+public interface PageRepository extends CrudRepository<Page, Long> {
+    
+    @RestResource(exported = false)
+    @Override
+    void deleteById(Long aLong);
+
+}
+```
+
+After this change if you send a `DELETE` request on the resource
+
+```
+curl -X DELETE http://127.0.0.1:7000/blogs/1 
+```
+
+you will got a `405` response code which means `MethodNotAllowed`.
 
 
 
