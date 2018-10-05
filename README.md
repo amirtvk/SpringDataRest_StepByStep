@@ -8,7 +8,9 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to customize repository access path?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-customize-repository-access-path)
 
-[How to use POST method for a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-post-method-for-a-repository)
+[How to use POST method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-post-method-on-a-repository)
+
+[How to use GET and HEAD method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-get-and-head-method-on-a-repository)
 
 
 ### How to expose an HTTP REST resource?
@@ -90,13 +92,87 @@ curl -X GET http://127.0.0.1:7000/blogs
 }
 ```
 
-### How to use POST method for a repository?
+### How to use POST method on a repository?
 
 A POST method is used for create a new resource in repository. for example if you want to create a new blog (page entity) just send a POST request including resource attributes in request body
 
 ```
 curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json' -d '{	"title" : "Amir Super Market",	"description" : "the best market ever"}'
 ```
+After running this command we got a `201` response code which means the resource was `created`
+
+
+### How to use GET and HEAD method for a repository?
+
+Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a GET request to the repository.
+
+'''json
+ curl -X GET http://127.0.0.1:7000/blogs 
+ {
+    "_embedded": {
+        "pages": [
+            {
+                "title": "Amir Super Market",
+                "description": "the best market ever",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    }
+                }
+            },
+            {
+                "title": "Amir Fast Food",
+                "description": "the awsome fast food",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/2"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/2"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs"
+        },
+        "profile": {
+            "href": "http://127.0.0.1:7000/profile/blogs"
+        }
+    }
+}
+```
+As you can see there are two resources in `pages` tag in response of GET request
+if you like to get details about just one resource you have to send a GET request on the resource URI (`_links.self.href`)
+
+```json
+curl -X GET http://127.0.0.1:7000/blogs/1
+{
+    "title": "Amir Super Market",
+    "description": "the best market ever",
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs/1"
+        },
+        "page": {
+            "href": "http://127.0.0.1:7000/blogs/1"
+        }
+    }
+}
+```
+
+HEAD method is used to check the availability of a resource. 
+
+```json
+curl -X HEAD http://127.0.0.1:7000/blogs/1
+```
+when you run this command, if a resource which has `identifier = 1` exists you will got a 204 response code `No Content` else the response code will be 404 `Not Found`
+
 
 
 
