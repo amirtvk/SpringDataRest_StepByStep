@@ -12,6 +12,10 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use GET and HEAD method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-get-and-head-method-on-a-repository)
 
+[How to use PATCH and PUT method for a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-patch-and-put-method-on-a-repository)
+
+
+
 
 ### How to expose an HTTP REST resource?
 
@@ -44,9 +48,8 @@ Page Repository:
 public interface PageRepository extends CrudRepository<Page, Long> {
 }
 ```
-Note that detection of repositories in code is done based on `RepositoryDiscoveryStrategies`
 
-we can access to HTTP resource:
+Now, we can access to HTTP resource:
 ```javascript
 $curl -X GET http://127.0.0.1:7000/pages
 
@@ -64,6 +67,8 @@ $curl -X GET http://127.0.0.1:7000/pages
   }
 }
 ```
+
+Note that detection of repositories in code is done based on `RepositoryDiscoveryStrategies`
 
 ### How to customize repository access path?
 Suppose you want to use another name for repository instead of default name (entity name + 's'/'es'/'ies' ...). In order to change the repository path you should use `@RepositoryRestResource` annotation.
@@ -104,7 +109,7 @@ After running this command we got a `201` response code which means the resource
 
 ### How to use GET and HEAD method for a repository?
 
-Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a GET request to the repository.
+Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a `GET` request to the repository.
 
 ```json
  curl -X GET http://127.0.0.1:7000/blogs 
@@ -147,9 +152,9 @@ Get method get one or list of resources. if you want to get list of all resource
     }
 }
 ```
-As you can see there are two resources in `pages` tag in response of GET request.
+As you can see there are two resources in `pages` tag in response of `GET` request.
 
-If you like to get details about just one resource you have to send a GET request on the resource URI (`_links.self.href`)
+If you like to get details about just one resource you have to send a `GET` request on the resource URI (`_links.self.href`)
 
 ```javascript
 curl -X GET http://127.0.0.1:7000/blogs/1
@@ -167,13 +172,44 @@ curl -X GET http://127.0.0.1:7000/blogs/1
 }
 ```
 
-HEAD method is used to check the availability of a resource. 
+`HEAD` method is used to check the availability of a resource. 
 
 ```javascript
 curl -X HEAD http://127.0.0.1:7000/blogs/1
 ```
-when you run this command, if a resource which has `identifier = 1` exists you will got a 204 response code `No Content` else the response code will be 404 `Not Found`
+when you run this command, if a resource which has `identifier = 1` exists you will got a `204` response code `No Content` else the response code will be `404` `Not Found`.
 
+
+
+
+### How to use PATCH and PUT method for a repository?
+
+`PATCH` method is used to partially update a resource. If you want to update a resource send a `PATCH` request to resource URI. The body of `PATCH` request have to include all attribute:newValues.
+
+```
+curl -X PATCH http://127.0.0.1:7000/blogs/1  -H 'Content-Type: application/json' -d '{ "description" : "the most bad super market ever"}'
+```
+after running this command description attribute of blog with identifier=1 will be updated.
+
+
+`PUT` method is used to completely replace or insert new (if not exists) a resource. If you want to completely replace a resource send a `PUT` request to resource URI. The body of 'PUT' method should includes all attributes of resource.
+ otherwise all missing attributes considered as `null`.
+
+```javascript
+curl -X PUT http://127.0.0.1:7000/blogs/2 -H 'Content-Type: application/json' -d '{ "title" : "Amir Pet Shop" }'
+{
+    "title": "Amir Pet Shop",
+    "description": null,
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs/2"
+        },
+        "page": {
+            "href": "http://127.0.0.1:7000/blogs/2"
+        }
+    }
+}
+```
 
 
 
