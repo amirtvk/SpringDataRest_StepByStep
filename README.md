@@ -106,7 +106,7 @@ After running this command we got a `201` response code which means the resource
 
 Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a GET request to the repository.
 
-'''json
+```json
  curl -X GET http://127.0.0.1:7000/blogs 
  {
     "_embedded": {
@@ -172,6 +172,9 @@ HEAD method is used to check the availability of a resource.
 curl -X HEAD http://127.0.0.1:7000/blogs/1
 ```
 when you run this command, if a resource which has `identifier = 1` exists you will got a 204 response code `No Content` else the response code will be 404 `Not Found`
+
+
+
 
 
 
