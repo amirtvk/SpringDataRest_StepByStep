@@ -1,4 +1,4 @@
-#Spring Data REST Step By Step Guide
+# Spring Data REST Step By Step Guide
 
 
 A step by step walk-though guide for developing RESTfull web services using Spring Data Rest.  
