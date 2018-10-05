@@ -12,8 +12,9 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use GET and HEAD method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-get-and-head-method-on-a-repository)
 
-[How to use PATCH and PUT method for a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-patch-and-put-method-on-a-repository)
+[How to use PATCH and PUT method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-patch-and-put-method-on-a-repository)
 
+[How to use DELETE method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-delete-method-on-a-repository)
 
 
 
@@ -111,7 +112,7 @@ After running this command we got a `201` response code which means the resource
 
 Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a `GET` request to the repository.
 
-```json
+```javascript
  curl -X GET http://127.0.0.1:7000/blogs 
  {
     "_embedded": {
@@ -182,7 +183,7 @@ when you run this command, if a resource which has `identifier = 1` exists you w
 
 
 
-### How to use PATCH and PUT method for a repository?
+### How to use PATCH and PUT method on a repository?
 
 `PATCH` method is used to partially update a resource. If you want to update a resource send a `PATCH` request to resource URI. The body of `PATCH` request have to include all attribute:newValues.
 
@@ -210,6 +211,23 @@ curl -X PUT http://127.0.0.1:7000/blogs/2 -H 'Content-Type: application/json' -d
     }
 }
 ```
+
+As you can see, a resource (identifire = 2) was replaced with new values. Because the `description` tag is omitted in request body, server considered the description as null.
+
+
+### How to use DELETE method on a repository?
+
+`DELETE` method is use for delete a resource. In order to delete a resource send a `DELETE` request to resource URI.
+
+```
+curl -X DELETE http://127.0.0.1:7000/blogs/4
+```
+You will got a `204` `No Content` response code if server can find and delete the resource.
+
+
+
+
+
 
 
 
