@@ -22,8 +22,11 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to enable HAL-Browser?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-hal-browser)
 
+[How clients can find out the meta-data of resources?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-find-out-the-metadata-of-resources)
 
 
+
+**********
 
 ### How to expose an HTTP REST resource?
 
