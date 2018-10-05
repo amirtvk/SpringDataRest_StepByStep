@@ -1,14 +1,17 @@
-A step by step walk-though for developing RESTfull web services using Spring Data Rest.  
+A step by step walk-though guide for developing RESTfull web services using Spring Data Rest.  
 
-Spring Data REST(SDR) is a very nice tool to develop HTTP Resources with minimum boilerplate code.
-Spring Data REST is a subproject of Spring data. SDR Analyze your repositories and expose them as REST Endpoint.
+Spring Data REST is a very nice tool to develop HTTP Resources with minimum boilerplate code.
+Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your repositories and expose them as REST Endpoint.
 
 
 [How to expose an HTTP REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
 
 [How to customize repository access path?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-customize-repository-access-path)
 
-#### How to expose an HTTP REST resource?
+[How to use POST method for a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-post-method-for-a-repository)
+
+
+### How to expose an HTTP REST resource?
 
 
 It is very easy. Just create an entity using JPA `@Entity` annotation and an repository interface.
@@ -60,7 +63,7 @@ $curl -X GET http://127.0.0.1:7000/pages
 }
 ```
 
-#### How to customize repository access path?
+### How to customize repository access path?
 Suppose you want to use another name for repository instead of default name (entity name + 's'/'es'/'ies' ...). In order to change the repository path you should use `@RepositoryRestResource` annotation.
 So our page repository is going to be annotated with the `@RepositoryRestResource` :
 
@@ -86,6 +89,16 @@ curl -X GET http://127.0.0.1:7000/blogs
   }
 }
 ```
+
+### How to use POST method for a repository?
+
+A POST method is used for create a new resource in repository. for example if you want to create a new blog (page entity) just send a POST request including resource attributes in request body
+
+```
+curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json' -d '{	"title" : "Amir Super Market",	"description" : "the best market ever"}'
+```
+
+
 
 
 
