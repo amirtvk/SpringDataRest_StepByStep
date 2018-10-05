@@ -20,7 +20,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How clients can discover resources based on HATEOS?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-discover-resources-based-on-hateos)
 
-[How to enable HAL-Browser?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-hal-browser?)
+[How to enable HAL-Browser?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-hal-browser)
 
 
 
@@ -268,9 +268,11 @@ according to `HATEOS`, all resources should be discoverable by client. Spring Da
 
 ### How to enable HAL-Browser?
 
-HAL-Browser is a nice web application for exploring REST APIs. By adding its dependency to the project class path, HAL-Browser will automatically added to root URL of server. Open a browser and go to `http://127.0.0.1:7000` 
+HAL-Browser is a nice web application for exploring REST APIs. By adding its dependency to the project class path, HAL-Browser will automatically added to root URL of server. Open a browser and go to
 
-![alt text](https://github.com/amirtvk/SpringDataRest_StepByStep/raw/master/img/halbrowser.png "halbrowser")
+ `http://127.0.0.1:7000` 
+
+![alt text](https://github.com/amirtvk/SpringDataRest_StepByStep/raw/master/img/halbrowser.png "HAL Browser")
 
 
 
