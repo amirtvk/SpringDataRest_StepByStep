@@ -47,7 +47,7 @@ public interface PageRepository extends CrudRepository<Page, Long> {
 Note that detection of repositories in code is done based on `RepositoryDiscoveryStrategies`
 
 we can access to HTTP resource:
-```json
+```javascript
 $curl -X GET http://127.0.0.1:7000/pages
 
 {
@@ -75,7 +75,7 @@ public interface PageRepository extends CrudRepository<Page, Long> {
 }
 ```
 
-```json
+```javascript
 curl -X GET http://127.0.0.1:7000/blogs
 {
   "_embedded" : {
@@ -147,10 +147,11 @@ Get method get one or list of resources. if you want to get list of all resource
     }
 }
 ```
-As you can see there are two resources in `pages` tag in response of GET request
-if you like to get details about just one resource you have to send a GET request on the resource URI (`_links.self.href`)
+As you can see there are two resources in `pages` tag in response of GET request.
 
-```json
+If you like to get details about just one resource you have to send a GET request on the resource URI (`_links.self.href`)
+
+```javascript
 curl -X GET http://127.0.0.1:7000/blogs/1
 {
     "title": "Amir Super Market",
@@ -168,7 +169,7 @@ curl -X GET http://127.0.0.1:7000/blogs/1
 
 HEAD method is used to check the availability of a resource. 
 
-```json
+```javascript
 curl -X HEAD http://127.0.0.1:7000/blogs/1
 ```
 when you run this command, if a resource which has `identifier = 1` exists you will got a 204 response code `No Content` else the response code will be 404 `Not Found`
