@@ -81,6 +81,10 @@ $curl -X GET http://127.0.0.1:7000/pages
 
 Note that detection of repositories in code is done based on `RepositoryDiscoveryStrategies`
 
+
+
+**********
+
 ### How to customize repository access path?
 Suppose you want to use another name for repository instead of default name (entity name + 's'/'es'/'ies' ...). In order to change the repository path you should use `@RepositoryRestResource` annotation.
 So our page repository is going to be annotated with the `@RepositoryRestResource` :
@@ -108,6 +112,10 @@ curl -X GET http://127.0.0.1:7000/blogs
 }
 ```
 
+
+
+**********
+
 ### How to use POST method on a repository?
 
 A POST method is used for create a new resource in repository. for example if you want to create a new blog (page entity) just send a POST request including resource attributes in request body
@@ -117,6 +125,10 @@ curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json' -d 
 ```
 After running this command we got a `201` response code which means the resource was `created`
 
+
+
+
+**********
 
 ### How to use GET and HEAD method for a repository?
 
@@ -193,6 +205,8 @@ when you run this command, if a resource which has `identifier = 1` exists you w
 
 
 
+**********
+
 ### How to use PATCH and PUT method on a repository?
 
 `PATCH` method is used to partially update a resource. If you want to update a resource send a `PATCH` request to resource URI. The body of `PATCH` request have to include all attribute:newValues.
@@ -225,6 +239,10 @@ curl -X PUT http://127.0.0.1:7000/blogs/2 -H 'Content-Type: application/json' -d
 As you can see, a resource (identifire = 2) was replaced with new values. Because the `description` tag is omitted in request body, server considered the description as null.
 
 
+
+
+**********
+
 ### How to use DELETE method on a repository?
 
 `DELETE` method is use for delete a resource. In order to delete a resource send a `DELETE` request to resource URI.
@@ -234,6 +252,10 @@ curl -X DELETE http://127.0.0.1:7000/blogs/4
 ```
 You will got a `204` `No Content` response code if server can find and delete the resource.
 
+
+
+
+**********
 
 ### How to disable a method exposure on a repository?
 
@@ -262,12 +284,14 @@ curl -X DELETE http://127.0.0.1:7000/blogs/1
 you will got a `405` response code which means `MethodNotAllowed`.
 
 
-
+**********
 
 ### How clients can discover resources based on HATEOS?
 
 according to `HATEOS`, all resources should be discoverable by client. Spring Data REST supports `HATEOS` through `HAL`. In Returned document there is a `_links` tag that includes self and related links to discover other resources.
 
+
+**********
 
 ### How to enable HAL-Browser?
 
@@ -277,6 +301,9 @@ HAL-Browser is a nice web application for exploring REST APIs. By adding its dep
 
 ![alt text](https://github.com/amirtvk/SpringDataRest_StepByStep/raw/master/img/halbrowser.png "HAL Browser")
 
+
+
+**********
 
 ### How clients can find out the meta-data of resources?
 
