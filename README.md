@@ -18,7 +18,12 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to disable a method exposure on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-disable-a-method-exposure-on-a-repository)
 
-[How clients can discover resources based on HATEOS?](https://github.com/amirtvk/SpringDataRest_StepByStep#How-clients-can-discover-resources-based-on-hateos)
+[How clients can discover resources based on HATEOS?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-discover-resources-based-on-hateos)
+
+[How to enable HAL-Browser?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-hal-browser?)
+
+
+
 
 ### How to expose an HTTP REST resource?
 
@@ -261,7 +266,12 @@ you will got a `405` response code which means `MethodNotAllowed`.
 according to `HATEOS`, all resources should be discoverable by client. Spring Data REST supports `HATEOS` through `HAL`. In Returned document there is a `_links` tag that includes self and related links to discover other resources.
 
 
-  
+### How to enable HAL-Browser?
+
+HAL-Browser is a nice web application for exploring REST APIs. By adding its dependency to the project class path, HAL-Browser will automatically added to root URL of server. Open a browser and go to `http://127.0.0.1:7000` 
+
+![alt text](https://github.com/amirtvk/SpringDataRest_StepByStep/raw/master/img/halbrowser.png "halbrowser")
+
 
 
 
