@@ -16,8 +16,9 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use DELETE method on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-delete-method-on-a-repository)
 
-[How to disable a method exposure on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-disable-a-method-exposure-on-a-repository)
+[How to disable a method exposure on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-disable-a-method-exposure-on-a-repository)
 
+[How clients can discover resources based on HATEOS?](https://github.com/amirtvk/SpringDataRest_StepByStep#How-clients-can-discover-resources-based-on-hateos)
 
 ### How to expose an HTTP REST resource?
 
@@ -255,7 +256,12 @@ you will got a `405` response code which means `MethodNotAllowed`.
 
 
 
+### How clients can discover resources based on HATEOS?
 
+according to `HATEOS`, all resources should be discoverable by client. Spring Data REST supports `HATEOS` through `HAL`. In Returned document there is a `_links` tag that includes self and related links to discover other resources.
+
+
+  
 
 
 
