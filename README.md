@@ -275,9 +275,51 @@ HAL-Browser is a nice web application for exploring REST APIs. By adding its dep
 ![alt text](https://github.com/amirtvk/SpringDataRest_StepByStep/raw/master/img/halbrowser.png "HAL Browser")
 
 
+### How clients can find out the meta-data of resources?
 
+Spring Data REST supports two way to get meta-data of resources. There is a profile resource for each repository that automatically generates by Spring Data REST. if you follow the profile resource you got a document in ALPS format. 
 
+```javascript
+curl -X GET http://127.0.0.1:7000/profile/blogs
+{
+    "alps": {
+        "version": "1.0",
+        "descriptor": [
+            {
+                "id": "page-representation",
+                "href": "http://127.0.0.1:7000/profile/blogs",
+                "descriptor": [
+                    {
+                        "name": "title",
+                        "type": "SEMANTIC"
+                    },
+					....
+					....
+					....
+```
+The second way to provide meta data to client is JSON Schema. Just send the same request to profile resource but with additional accept header, and you got the meta data in JSON Schema format.
 
+```javascript
+curl -X GET http://127.0.0.1:7000/profile/blogs -H 'Accept: application/schema+json' 
+{
+    "title": "Page",
+    "properties": {
+        "description": {
+            "title": "Description",
+            "readOnly": false,
+            "type": "string"
+        },
+        "title": {
+            "title": "Title",
+            "readOnly": false,
+            "type": "string"
+        }
+    },
+    "definitions": {},
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema#"
+}
+```
 
 
 
