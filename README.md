@@ -27,7 +27,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How clients can find out the meta-data of resources?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-find-out-the-metadata-of-resources)
 
-
+[How to add custom search using spring data (query by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-by-method-name?)
 
 **********
 
