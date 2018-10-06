@@ -27,7 +27,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How clients can find out the meta-data of resources?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-find-out-the-metadata-of-resources)
 
-[How to add custom search using spring data (query by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-by-method-name?)
+[How to add custom search using spring data (query creation by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-creation-by-method-name)
 
 **********
 
@@ -353,6 +353,55 @@ curl -X GET http://127.0.0.1:7000/profile/blogs -H 'Accept: application/schema+j
     "$schema": "http://json-schema.org/draft-04/schema#"
 }
 ```
+
+### How to add custom search using spring data (query creation by method name)?
+
+One of the interesting features of Spring Data is creating query methods by method name. Just create a method in repository interface with respect to some naming conventions, Spring Data implements other things for you.
+You can use this feature and expose the search resource method within the repository
+
+```java
+@RepositoryRestResource(path = "blogs")
+public interface PageRepository extends CrudRepository<Page, Long> {
+
+	List<Page> findByTitleLike(@Param("title") String title);
+}
+```
+
+after adding this method you can use this search on blog (Page in DB) resources.
+
+```javascript
+curl -X GET 'http://127.0.0.1:7000/blogs/search/findByTitleLike?title=%25Fast%25' 
+{
+    "_embedded": {
+        "pages": [
+            {
+                "title": "Amir Fast Food",
+                "description": "the awsome fast food",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs/search/findByTitleLike?title=%25Fast%25"
+        }
+    }
+}
+```
+
+As you can see in the body of response, all blogs (pages) which the title is like 'Fast' has been returned as result.
+
+
+
+
+
 
 
 
