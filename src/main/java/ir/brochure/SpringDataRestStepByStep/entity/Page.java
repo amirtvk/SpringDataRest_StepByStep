@@ -1,11 +1,11 @@
 package ir.brochure.SpringDataRestStepByStep.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Nationalized;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +21,6 @@ public class Page {
     @Nationalized
     private String description;
 
+    @OneToMany
+    List<Comment> comments;
 }

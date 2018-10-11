@@ -411,6 +411,102 @@ Here we are going to create the same search (find pages by title) method using J
 List<Page> customSearchFindByTitle(@Param("title") String title);
 ```
 
+### How to implements oneToMany relationship?
+
+In our example, suppose each page includes some comments. So we have an oneToMany relationship between `Page` and `Comment`. Lets add comment feature to our RESTfull API.
+
+First, we add comment entity:
+
+```java
+@Entity
+@Data
+public class Comment {
+
+    @Id
+    @GeneratedValue(generator = "CommentIdSeq")
+    private Long id;
+
+    @Nationalized
+    private String text;
+
+}
+```
+
+and comment repository:
+
+```java
+@RepositoryRestResource
+public interface CommentsRepository extends CrudRepository<Comment, Long> {
+}
+
+then we have to modify our `Page` entity to support relationship with `Comment`
+
+```java
+@Entity
+@Data
+public class Page {
+
+    @Id
+    @GeneratedValue(generator = "PageIdSeq")
+    private Long id;
+
+    @Nationalized
+    private String title;
+
+    @Nationalized
+    private String description;
+
+    @OneToMany
+    List<Comment> comments;
+}
+```
+
+Now we can add comments:
+
+```javascript
+curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json'  -d '{ "text" : "this blog is very good" }'
+
+{
+    "text": "this blog is very good",
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/comments/1"
+        },
+        "comment": {
+            "href": "http://127.0.0.1:7000/comments/1"
+        }
+    }
+}
+
+curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json'  -d '{ "text" : "I like the blog" }'
+
+{
+    "text": "I like the blog",
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/comments/2"
+        },
+        "comment": {
+            "href": "http://127.0.0.1:7000/comments/2"
+        }
+    }
+}
+
+
+```
+
+Then we can refer comments related to a blog using comment URI.
+
+```javascript
+curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json'   -d '{ "title" : "Amir Fast Food", "description" : "the awsome fast food", "comments" : ["http://127.0.0.1:7000/comments/1", "http://127.0.0.1:7000/comments/2"] }'
+```
+
+as you can see we refer to two comment in order to add to comments collection for the blog.
+
+
+
+
+
 
 
 
