@@ -39,7 +39,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
 
-[How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method?)
+[How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findall-method?)
 
 ### How to expose an HTTP REST resource?
 
@@ -572,7 +572,7 @@ public interface KeyWordRepository extends CrudRepository<KeyWord, Long> {
 
 ### How to enable paging and sorting capability on findAll method?
 
-Extend you repository from `PagingAndSortingRepository` instead of 'CrudRepository'. Note that `PagingAndSortingRepository` is sub-interface of 'CrudRepository' and you don't loose any of predefined methods. 
+Extend you repository from `PagingAndSortingRepository` instead of 'CrudRepository'. Note that `PagingAndSortingRepository` is sub-interface of `CrudRepository` and you don't loose any of predefined methods. 
 
 ```java
 @RepositoryRestResource
