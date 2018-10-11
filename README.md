@@ -35,10 +35,11 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to update oneToMany relationship?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-update-onetomany-relationship)
 
-[How to add a resource with embedded in-line childes (Composition)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-a-resource-with-embedded-inline-childes-composition)
+[How to add a resource with embedded in-line childes (Composition)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-a-resource-with-embedded-in-line-childes-composition)
 
 [How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
 
+[How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method?)
 
 ### How to expose an HTTP REST resource?
 
@@ -363,6 +364,8 @@ curl -X GET http://127.0.0.1:7000/profile/blogs -H 'Accept: application/schema+j
 }
 ```
 
+**********
+
 ### How to add custom search using spring data (query creation by method name)?
 
 One of the interesting features of Spring Data is creating query methods by method name. Just create a method in repository interface with respect to some naming conventions, Spring Data implements other things for you.
@@ -406,6 +409,9 @@ curl -X GET 'http://127.0.0.1:7000/blogs/search/findByTitleLike?title=%25Fast%25
 ```
 
 As you can see in the body of response, all blogs (pages) which the title like '%Fast%' has been returned as result.
+
+
+**********
 
 
 ### How to add custom search using custom query?
@@ -513,6 +519,8 @@ curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json' \
 as you can see we refer to two comment in order to add to comments collection for the blog.
 
 
+**********
+
 ### How to update oneToMany relationship?
 
 In real world, comments will submitted after the blog was created. So in this scenario we have to add a comment to existing page(blog). According to HTTP and REST specifications, `PATCH` and `PUT` methods are used to be for update operations.
@@ -522,6 +530,9 @@ In Spring Data REST we can use `PATCH` method and `Content-Type: text/uri-list` 
 curl -X PATCH http://127.0.0.1:7000/blogs/1/comments -H 'Content-Type: text/uri-list'  -d http://127.0.0.1:7000/comments/3
 ```
 Note that when using `Content-Type: text/uri-list` Header, consider each URI shall appear on one and only one line.
+
+
+**********
 
 
 ### How to add a resource with embedded in-line childes (Composition)?
@@ -554,6 +565,9 @@ and the KeyWord should not be exported:
 public interface KeyWordRepository extends CrudRepository<KeyWord, Long> {
 }
 ```
+
+
+**********
 
 
 ### How to enable paging and sorting capability on findAll method?
@@ -626,7 +640,7 @@ curl -X GET 'http://127.0.0.1:7000/comments?size=3&page=0&sort=text,desc'
 }
 ```
 
-
+**********
 
 
 
