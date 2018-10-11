@@ -37,6 +37,8 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add a resource with embedded in-line childes (Composition)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-a-resource-with-embedded-inline-childes-composition)
 
+[How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
+
 
 ### How to expose an HTTP REST resource?
 
@@ -553,7 +555,78 @@ public interface KeyWordRepository extends CrudRepository<KeyWord, Long> {
 }
 ```
 
- 
+
+### How to enable paging and sorting capability on findAll method?
+
+Extend you repository from `PagingAndSortingRepository` instead of 'CrudRepository'. Note that `PagingAndSortingRepository` is sub-interface of 'CrudRepository' and you don't loose any of predefined methods. 
+
+```java
+@RepositoryRestResource
+public interface CommentsRepository extends PagingAndSortingRepository<Comment, Long> {
+}
+```
+
+Now you can send  `Paging` and `Sorting` data on your `GET` Request and then you get sorted result and paging info (size, totalElement, totalPage, ...) in response payload.
+
+
+```javascript
+curl -X GET 'http://127.0.0.1:7000/comments?size=3&page=0&sort=text,desc'
+{
+    "_embedded": {
+        "comments": [
+            {
+                "text": "This is comment No 871",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/comments/2"
+                    },
+                    "comment": {
+                        "href": "http://127.0.0.1:7000/comments/2"
+                    }
+                }
+            },
+            {
+                "text": "This is comment No 691",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/comments/1"
+                    },
+                    "comment": {
+                        "href": "http://127.0.0.1:7000/comments/1"
+                    }
+                }
+            },
+            {
+                "text": "This is comment No 310",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/comments/3"
+                    },
+                    "comment": {
+                        "href": "http://127.0.0.1:7000/comments/3"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/comments"
+        },
+        "profile": {
+            "href": "http://127.0.0.1:7000/profile/comments"
+        }
+    },
+    "page": {
+        "size": 3,
+        "totalElements": 3,
+        "totalPages": 1,
+        "number": 0
+    }
+}
+```
+
+
 
 
 
