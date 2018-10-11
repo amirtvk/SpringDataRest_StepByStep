@@ -23,4 +23,7 @@ public class Page {
 
     @OneToMany
     List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<KeyWord> keyWords;
 }

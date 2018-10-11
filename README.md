@@ -30,7 +30,13 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 [How to add custom search using spring data (query creation by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-creation-by-method-name)
 
 [How to add custom search using custom query?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-custom-query)
-**********
+
+[How to implements oneToMany relationship?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-implements-onetomany-relationship)
+
+[How to update oneToMany relationship?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-update-onetomany-relationship)
+
+[How to add a resource with embedded in-line childes (Composition)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-a-resource-with-embedded-inline-childes-composition)
+
 
 ### How to expose an HTTP REST resource?
 
@@ -498,10 +504,57 @@ curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json' 
 Then we can refer comments related to a blog using comment URI.
 
 ```javascript
-curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json'   -d '{ "title" : "Amir Fast Food", "description" : "the awsome fast food", "comments" : ["http://127.0.0.1:7000/comments/1", "http://127.0.0.1:7000/comments/2"] }'
+curl -X POST http://127.0.0.1:7000/blogs -H 'Content-Type: application/json' \
+-d '{ "title" : "Amir Fast Food", "description" : "the awsome fast food", "comments" : ["http://127.0.0.1:7000/comments/1", "http://127.0.0.1:7000/comments/2"] }'
 ```
 
 as you can see we refer to two comment in order to add to comments collection for the blog.
+
+
+### How to update oneToMany relationship?
+
+In real world, comments will submitted after the blog was created. So in this scenario we have to add a comment to existing page(blog). According to HTTP and REST specifications, `PATCH` and `PUT` methods are used to be for update operations.
+In Spring Data REST we can use `PATCH` method and `Content-Type: text/uri-list` Header. Lets add one(or more) comment to our page(blog):
+
+```javascript
+curl -X PATCH http://127.0.0.1:7000/blogs/1/comments -H 'Content-Type: text/uri-list'  -d http://127.0.0.1:7000/comments/3
+```
+Note that when using `Content-Type: text/uri-list` Header, consider each URI shall appear on one and only one line.
+
+
+### How to add a resource with embedded in-line childes (Composition)?
+
+Some oneToMany relationships is in type of Composition. Composition is used when the life of the child is completely controlled by the parent.
+Suppose we want to add some keywords for each page(blog). This relationship is a composition, which means the keywords can not exists if the page destroy.
+Spring Data REST Allowed child resources to be embedded in parent resource if the child domain doesn't have repository. Let's add a page(blog) with embedded keywords.
+
+First we add a `KeyWord` entity:
+
+```java
+@Entity
+@Data
+public class KeyWord {
+
+    @Id
+    @GeneratedValue(generator = "KeywordIdSeq")
+    private Long id;
+
+    @Nationalized
+    private String word;
+
+}
+```
+
+and the KeyWord should not be exported:
+
+```java
+@RepositoryRestResource(exported = false)
+public interface KeyWordRepository extends CrudRepository<KeyWord, Long> {
+}
+```
+
+ 
+
 
 
 
