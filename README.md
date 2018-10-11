@@ -29,7 +29,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add custom search using spring data (query creation by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-creation-by-method-name)
 
-[How to add custom search using custom query?](how-to-add-custom-search-using-custom-query)
+[How to add custom search using custom query?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-custom-query)
 **********
 
 ### How to expose an HTTP REST resource?
@@ -407,8 +407,8 @@ Spring Data allows you to create repository methods using JPQL queries. These me
 Here we are going to create the same search (find pages by title) method using JPQL query. 
 
 ```java
-    @Query("select p from Page p where p.title like :title")
-    List<Page> customSearchFindByTitle(@Param("title") String title);
+@Query("select p from Page p where p.title like :title")
+List<Page> customSearchFindByTitle(@Param("title") String title);
 ```
 
 
