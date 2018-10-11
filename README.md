@@ -25,10 +25,11 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to enable HAL-Browser?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-hal-browser)
 
-[How clients can find out the meta-data of resources?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-find-out-the-metadata-of-resources)
+[How clients can find out the meta-data of resources?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-clients-can-find-out-the-meta-data-of-resources)
 
 [How to add custom search using spring data (query creation by method name)?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-custom-search-using-spring-data-query-creation-by-method-name)
 
+[How to add custom search using custom query?](how-to-add-custom-search-using-custom-query)
 **********
 
 ### How to expose an HTTP REST resource?
@@ -396,11 +397,19 @@ curl -X GET 'http://127.0.0.1:7000/blogs/search/findByTitleLike?title=%25Fast%25
 }
 ```
 
-As you can see in the body of response, all blogs (pages) which the title is like 'Fast' has been returned as result.
+As you can see in the body of response, all blogs (pages) which the title like '%Fast%' has been returned as result.
 
 
+### How to add custom search using custom query?
 
+Spring Data allows you to create repository methods using JPQL queries. These methods are also exposed on HTTP When using Spring Data REST.
 
+Here we are going to create the same search (find pages by title) method using JPQL query. 
+
+```java
+    @Query("select p from Page p where p.title like :title")
+    List<Page> customSearchFindByTitle(@Param("title") String title);
+```
 
 
 
