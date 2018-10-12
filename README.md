@@ -39,7 +39,13 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
 
-[How to enable paging and sorting capability on findAll method?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findall-method?)
+[How to add paging and sorting to custom search methods?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
+
+
+
+**********
+
+
 
 ### How to expose an HTTP REST resource?
 
@@ -641,6 +647,62 @@ curl -X GET 'http://127.0.0.1:7000/comments?size=3&page=0&sort=text,desc'
 ```
 
 **********
+
+### How to add paging and sorting to custom search methods?
+
+you can easily add paging and sorting capability to your search methods. Just add a `Pagebale` argument to your method signature and change return type of method to `Page<T>`.
+We are going to add a pageble and sortable search method to our comments repository.
+
+```java
+@RepositoryRestResource
+public interface CommentsRepository extends PagingAndSortingRepository<Comment, Long> {
+
+    Page<Comment> findByTextLike(@Param("text") String text, Pageable pageable);
+}
+```
+
+then we can use this feature
+
+
+```javascript
+curl -X GET 'http://127.0.0.1:7000/comments/search/findByTextLike?text=This%25&page=0&size=2&sort=text,asc'
+
+{
+    "_embedded": {
+        "comments": [
+            {
+                "text": "This is my comment on blog 197",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/comments/5"
+                    },
+                    "comment": {
+                        "href": "http://127.0.0.1:7000/comments/5"
+                    }
+                }
+            },
+            {
+                "text": "This is my comment on blog 238",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/comments/3"
+                    },
+                    "comment": {
+                        "href": "http://127.0.0.1:7000/comments/3"
+                    }
+                }
+            }
+        ]
+    },
+    "page": {
+        "size": 2,
+        "totalElements": 11,
+        "totalPages": 6,
+        "number": 0
+    }
+}
+```
+
 
 
 
