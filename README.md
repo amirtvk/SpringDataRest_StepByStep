@@ -41,6 +41,35 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add paging and sorting to custom search methods?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
 
+[How to add validation to repositories?]
+
+[How to use events on a repository?]
+
+[How to define a projection for a REST resource?]
+
+[How to define a nested projection for a REST resource?]
+
+[How to define an excerpt for a REST resource?]
+
+[How to use ETag header in Spring Data Rest?]
+
+[How to add enumerations fields to a REST resource?]
+
+[How to configure Spring Data Rest as a resource server in OAuth2]
+
+--- --- --- ---
+
+[How to enable H2 console?]
+
+[How to use Spring Data Rest behind a proxy?]
+
+[How to set DateTime format in search methods?]
+
+[How to use SPEL in projections?]
+
+[how to expose resource IDs?]
+
+[how to disable CORS check?]
 
 
 **********
@@ -650,8 +679,8 @@ curl -X GET 'http://127.0.0.1:7000/comments?size=3&page=0&sort=text,desc'
 
 ### How to add paging and sorting to custom search methods?
 
-you can easily add paging and sorting capability to your search methods. Just add a `Pagebale` argument to your method signature and change return type of method to `Page<T>`.
-We are going to add a pageble and sortable search method to our comments repository.
+You can easily add paging and sorting capability to your search methods. Just add a `Pagebale` argument to your method signature and change return type of method to `Page<T>`.
+We are going to add a `Pagebale` and sortable search method to our comments repository.
 
 ```java
 @RepositoryRestResource
