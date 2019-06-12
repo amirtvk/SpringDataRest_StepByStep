@@ -41,7 +41,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add paging and sorting to custom search methods?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-enable-paging-and-sorting-capability-on-findAll-method)
 
-[How to add validation to repositories?]
+[How to add validation to repositories?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-validation-to-repositories)
 
 [How to use events on a repository?]
 
@@ -733,11 +733,73 @@ curl -X GET 'http://127.0.0.1:7000/comments/search/findByTextLike?text=This%25&p
 ```
 
 
+**********
+
+### How to add validation to repositories?
+
+It is possible to define validators in Spring Data Rest. These validators can trigger on simultaneous events. The events are `before/after create`, `before/after update`, `before/after delete`.  
+The first step to add a validator is create a validator class that implements Spring 'Validator' interface. In the following code we are going to create a validator that validate comment resources before creation.
 
 
+```java
+public class BeforeCreateCommentValidator implements Validator {
+    
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return aClass.equals(Comment.class);
+    }
+
+    @Override
+    public void validate(Object o, Errors errors) {
+        Comment comment = (Comment)o;
+        if(comment.getText() == null || comment.getText().isEmpty())
+            errors.rejectValue("text", "comment.text.empty");
+
+    }
+}
+```
+
+As you can see in the code, we checked the text property of incoming comment object. In case of failed validation we should specify a suitable message key (`comment.text.empty`) to be sent back to client.
+
+Then you should register your validator (and the corresponding event) to Spring Data REST.
+
+```java
+@Configuration
+public class RestConfiguration implements RepositoryRestConfigurer {
+
+    @Override
+    public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
+        validatingListener.addValidator("beforeCreate", new BeforeCreateCommentValidator());
+    }
+}
+```
+
+and you should also define your message in `message.properties` file.
 
 
+```java
+comment.text.empty=text is empty.
+```
 
+Now we can test our validan using the following request:
+
+
+```javascript
+curl -X POST http://127.0.0.1:7000/comments -H  -H 'Content-Type: application/json' -d '{}'
+
+
+{
+    "errors": [
+        {
+            "entity": "Comment",
+            "property": "text",
+            "invalidValue": null,
+            "message": "text is empty."
+        }
+    ]
+}
+
+```
 
 
 
