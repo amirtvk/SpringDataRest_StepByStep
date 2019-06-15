@@ -45,13 +45,13 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use events on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-events-on-a-repository)
 
-[How to define a projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-projection-for-a-REST-resource)
+[How to define a projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-projection-for-a-rest-resource)
 
-[How to define a nested projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-nested-projection-for-a-REST-resource)
+[How to define a nested projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-nested-projection-for-a-rest-resource)
 
-[How to define an excerpt for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-an-excerpt-for-a-REST-resource)
+[How to define an excerpt for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-an-excerpt-for-a-rest-resource)
 
-[How to add enumerations fields to a REST resource?]
+[How to add enumerations fields to a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-enumerations-fields-to-a-rest-resource?)
 
 [How to use ETag header in Spring Data Rest?]
 
@@ -1055,7 +1055,58 @@ By using excepts, you can create a projection and set it on a repository. A repo
 
 **********
 
+### How to add enumerations fields to a REST resource?
 
+First create enum:
+
+```java
+public enum CommentStatus {
+    APPROVED,
+    REJECTED,
+    PENDING
+}
+```
+
+Add enum field to entity:
+
+```java@Entity
+@Data
+public class Comment {
+
+    @Id
+    @GeneratedValue(generator = "CommentIdSeq")
+    private Long id;
+
+    @Nationalized
+    private String text;
+
+    private String submitBy;
+
+    private CommentStatus status;
+
+}
+```
+
+add enum translation values in `rest-messages.properties` file
+
+```java
+ir.brochure.SpringDataRestStepByStep.entity.CommentStatus.APPROVED=Approved
+ir.brochure.SpringDataRestStepByStep.entity.CommentStatus.REJECTED=Rejected
+ir.brochure.SpringDataRestStepByStep.entity.CommentStatus.PENDING=Pending
+```
+
+
+enable enum translation in `application.properties` file
+
+```java
+spring.data.rest.enable-enum-translation=true
+```
+
+now you can use translations in requests and see translations in response:
+
+```javascript
+curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json'   -d '{	"text" : "This is my comment on blog # 588","status" : "Approved"}'
+```
 
 
 

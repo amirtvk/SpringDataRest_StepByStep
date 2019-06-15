@@ -20,4 +20,6 @@ public class Comment {
 
     private String submitBy;
 
+    private CommentStatus status;
+
 }
