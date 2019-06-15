@@ -49,23 +49,23 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to define a nested projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-nested-projection-for-a-REST-resource)
 
-[How to define an excerpt for a REST resource?]
-
-[How to use ETag header in Spring Data Rest?]
+[How to define an excerpt for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-an-excerpt-for-a-REST-resource)
 
 [How to add enumerations fields to a REST resource?]
 
-[How to configure Spring Data Rest as a resource server in OAuth2]
+[How to use ETag header in Spring Data Rest?]
 
 --- --- --- ---
+
+[How to configure Spring Data Rest as a resource server in OAuth2]
+
+[How to use SPEL in projections?]
 
 [How to enable H2 console?]
 
 [How to use Spring Data Rest behind a proxy?]
 
 [How to set DateTime format in search methods?]
-
-[How to use SPEL in projections?]
 
 [how to expose resource IDs?]
 
@@ -1046,6 +1046,15 @@ curl -X GET 'http://127.0.0.1:7000/blogs?projection=pagesJustTitleAndCommentProj
 }
 
 ```
+
+**********
+
+### How to define an excerpt for a REST resource?
+
+By using excepts, you can create a projection and set it on a repository. A repository excerpt will be apply on all collection resources of repository.
+
+**********
+
 
 
 
