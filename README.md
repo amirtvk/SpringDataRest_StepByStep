@@ -45,7 +45,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to use events on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-events-on-a-repository)
 
-[How to define a projection for a REST resource?]
+[How to define a projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-projection-for-a-REST-resource)
 
 [How to define a nested projection for a REST resource?]
 
@@ -848,7 +848,126 @@ curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json' 
 }
 ```
 
+**********
 
+### How to define a projection for a REST resource?
+
+If you need to change the representation of a resource, projections is the answer. When clients send a GET request in order to fetch resource(es) the Spring Date REST server create result
+with respect to projection. Client specify the projection by sending a `projection` parameter along with the request. Here we are goring to create a `NoTitleWithComments` projection for `Page` (Blog) resource.
+As the name shows this is a projection that doesn't contain any information about the titles and embedded comments of a page (blog). The following code adds the projection to project:
+
+
+```java
+@Projection(name = "pagesNoTitleWithCommentsProjection", types = {Page.class})
+public interface PagesNoTitleWithCommentsProjection {
+    String getDescription();
+    List<KeyWord> getKeyWords();
+    List<Comment> getComments();
+}
+```
+
+Now clients are able to GET pages (Bloges) in the predefined projecttion.
+
+```javascript
+http://127.0.0.1:7000/blogs?projection=pagesNoTitleWithCommentsProjection
+
+{
+    "_embedded": {
+        "pages": [
+            {
+                "description": "the awsome fast food",
+                "keyWords": [
+                    {
+                        "word": "eat"
+                    },
+                    {
+                        "word": "drink"
+                    }
+                ],
+                "comments": [
+                    {
+                        "text": "This is my comment on blog # 268",
+                        "submitBy": "dummyUser"
+                    }
+                ],
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/1{?projection}",
+                        "templated": true
+                    },
+                    "comments": {
+                        "href": "http://127.0.0.1:7000/blogs/1/comments"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs?projection=pagesNoTitleWithCommentsProjection"
+        },
+        "profile": {
+            "href": "http://127.0.0.1:7000/profile/blogs"
+        },
+        "search": {
+            "href": "http://127.0.0.1:7000/blogs/search"
+        }
+    }
+}
+
+```
+
+
+if no projection have been sent by client, the server create the query result with default 
+
+
+```javascript
+http://127.0.0.1:7000/blogs
+{
+    "_embedded": {
+        "pages": [
+            {
+                "title": "Amir Fast Food",
+                "description": "the awsome fast food",
+                "keyWords": [
+                    {
+                        "word": "eat"
+                    },
+                    {
+                        "word": "drink"
+                    }
+                ],
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/1{?projection}",
+                        "templated": true
+                    },
+                    "comments": {
+                        "href": "http://127.0.0.1:7000/blogs/1/comments"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs"
+        },
+        "profile": {
+            "href": "http://127.0.0.1:7000/profile/blogs"
+        },
+        "search": {
+            "href": "http://127.0.0.1:7000/blogs/search"
+        }
+    }
+}
+```
 
 
 
