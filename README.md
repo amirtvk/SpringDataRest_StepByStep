@@ -43,7 +43,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add validation to repositories?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-validation-to-repositories)
 
-[How to use events on a repository?]
+[How to use events on a repository?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-events-on-a-repository)
 
 [How to define a projection for a REST resource?]
 
@@ -800,6 +800,54 @@ curl -X POST http://127.0.0.1:7000/comments -H  -H 'Content-Type: application/js
 }
 
 ```
+
+**********
+
+### How to use events on a repository?
+
+Spring Data Rest supports 8 types of events in regards to crating, updating, deleting resources. Here is a list of events that we can define for resourcesBeforeCreateEvent:
+`BeforeCreateEvent` `AfterCreateEvent` `BeforeSaveEvent` `AfterSaveEvent` `BeforeLinkSaveEvent` `AfterLinkSaveEvent` `BeforeDeleteEvent` `AfterDeleteEvent` 
+Suppose we gonna to set a field on creation of a comment resource. In order to add event handler our code may be something like this:
+
+```java
+@Component
+@RepositoryEventHandler(Comment.class)
+public class CommentEventHandler {
+
+
+    @HandleBeforeCreate
+    private void handleBeforeCreate(Comment retail){
+        retail.setSubmitBy(getAuthenticatedUser());
+    }
+
+    private String getAuthenticatedUser(){
+        return "dummyUser";
+    }
+
+
+}
+```
+
+After adding this code the event handler will be applied on creation of comment resources.
+
+```javascript
+curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json' -d '{"text" : "that is a good one"}'
+
+
+{
+    "text": "that is a good one",
+    "submitBy": "dummyUser",
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/comments/1"
+        },
+        "comment": {
+            "href": "http://127.0.0.1:7000/comments/1"
+        }
+    }
+}
+```
+
 
 
 

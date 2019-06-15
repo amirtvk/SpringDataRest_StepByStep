@@ -18,4 +18,6 @@ public class Comment {
     @Nationalized
     private String text;
 
+    private String submitBy;
+
 }
