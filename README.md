@@ -47,7 +47,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to define a projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-projection-for-a-REST-resource)
 
-[How to define a nested projection for a REST resource?]
+[How to define a nested projection for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-a-nested-projection-for-a-REST-resource)
 
 [How to define an excerpt for a REST resource?]
 
@@ -968,6 +968,85 @@ http://127.0.0.1:7000/blogs
     }
 }
 ```
+
+**********
+
+### How to define a nested projection for a REST resource?
+In Spring Data REST you can use one projection in another projections and simply create rich data representations. In the following example we are going to create a projection, then we use it in another projection.
+First we create a projection for comments named `commentsJustTextProjection`
+
+```java
+@Projection(name = "pagesNoTitleWithCommentsProjection", types = {Page.class})
+public interface PagesNoTitleWithCommentsProjection {
+    String getDescription();
+    List<KeyWord> getKeyWords();
+    List<Comment> getComments();
+}
+```
+
+After that, we create `pagesJustTitleAndCommentProjection` projection. This projection has `pagesNoTitleWithCommentsProjection` in itself;
+
+```java
+@Projection(name = "pagesJustTitleAndCommentProjection", types = {Page.class})
+public interface PagesJustTitleAndCommentProjection {
+    String getTitle();
+    List<CommentsJustTextProjection> getComments();
+}
+```
+
+after adding these projections to project, when `pagesJustTitleAndCommentProjection` is used, both projections are applied to the result of request
+
+```javascript
+
+curl -X GET 'http://127.0.0.1:7000/blogs?projection=pagesJustTitleAndCommentProjection'
+
+{
+    "_embedded": {
+        "pages": [
+            {
+                "comments": [
+                    {
+                        "text": "This is my comment on blog # 733",
+                        "_links": {
+                            "self": {
+                                "href": "http://127.0.0.1:7000/comments/1{?projection}",
+                                "templated": true
+                            }
+                        }
+                    }
+                ],
+                "title": "Amir Fast Food",
+                "_links": {
+                    "self": {
+                        "href": "http://127.0.0.1:7000/blogs/1"
+                    },
+                    "page": {
+                        "href": "http://127.0.0.1:7000/blogs/1{?projection}",
+                        "templated": true
+                    },
+                    "comments": {
+                        "href": "http://127.0.0.1:7000/blogs/1/comments{?projection}",
+                        "templated": true
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://127.0.0.1:7000/blogs?projection=pagesJustTitleAndCommentProjection"
+        },
+        "profile": {
+            "href": "http://127.0.0.1:7000/profile/blogs"
+        },
+        "search": {
+            "href": "http://127.0.0.1:7000/blogs/search"
+        }
+    }
+}
+
+```
+
 
 
 
