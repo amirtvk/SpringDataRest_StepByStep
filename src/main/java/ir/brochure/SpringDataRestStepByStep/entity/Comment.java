@@ -6,6 +6,7 @@ import org.hibernate.annotations.Nationalized;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 @Data
@@ -22,4 +23,6 @@ public class Comment {
 
     private CommentStatus status;
 
+    @Version
+    private Long version;
 }

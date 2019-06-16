@@ -53,7 +53,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to add enumerations fields to a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-enumerations-fields-to-a-rest-resource?)
 
-[How to use ETag header in Spring Data Rest?]
+[How to use ETag header in Spring Data REST?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-ETag-header-in-spring-data-rest)
 
 --- --- --- ---
 
@@ -1108,7 +1108,115 @@ now you can use translations in requests and see translations in response:
 curl -X POST http://127.0.0.1:7000/comments -H 'Content-Type: application/json'   -d '{	"text" : "This is my comment on blog # 588","status" : "Approved"}'
 ```
 
+**********
 
+### How to use ETag header in Spring Data REST?
+
+By usnig ETag header we can check the version of resource. This can be useful in situations when clients doesn't know whether they have the last  version of resource or not.
+Spring Data REST automatically adds ETag header to entities if they have `@Version` annotated field:
+
+```java
+
+@Entity
+@Data
+public class Comment {
+
+    @Id
+    @GeneratedValue(generator = "CommentIdSeq")
+    private Long id;
+
+    @Nationalized
+    private String text;
+
+    private String submitBy;
+
+    private CommentStatus status;
+
+    @Version
+    private Long version;
+}
+
+```
+
+Suppose client A get comment resource (id = 1)
+
+```javascript
+curl -i -X GET   http://127.0.0.1:7000/comments/1
+
+ETag: "0"
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: application/hal+json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 15 Jun 2019 12:11:01 GMT
+
+{
+  "text" : "This is my comment on blog ",
+  "submitBy" : "dummyUser",
+  "status" : "Approved",
+  "_links" : {
+    "self" : {
+      "href" : "http://127.0.0.1:7000/comments/1"
+    },
+    "comment" : {
+      "href" : "http://127.0.0.1:7000/comments/1{?projection}",
+      "templated" : true
+    }
+  }
+}
+
+```
+
+
+Client B  update this resource
+
+```javascript
+curl -i -X PATCH http://127.0.0.1:7000/comments/1  -H 'Content-Type: application/json' -d '{"text" : "my comment is edited"}'
+
+ETag: "1"
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Type: application/hal+json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 15 Jun 2019 12:13:47 GMT
+
+{
+  "text" : "my comment is edited",
+  "submitBy" : "dummyUser",
+  "status" : "Approved",
+  "_links" : {
+    "self" : {
+      "href" : "http://127.0.0.1:7000/comments/1"
+    },
+    "comment" : {
+      "href" : "http://127.0.0.1:7000/comments/1{?projection}",
+      "templated" : true
+    }
+  }
+}
+
+
+```
+
+Now client A doesn't have last version of the resource. Client A wants to update the resource if he has the last version. In this situations `If-Match` header comes to rescue, 
+so client A fill `If-Match` with the last version (ETag) of resource that he/she has and send the update request.
+
+``javascript
+
+curl -X PATCH http://127.0.0.1:7000/comments/1   -H 'Content-Type: application/json'  -H 'If-Match: 0' -d '{"text" : "my comment is edited by Client A"}' -sw %{http_code}
+412
+```
+
+as you can client A got `412 Precondition Failed` response code and the update request failed, because he/she doesn't have last version of the entity.
+
+
+ 
 
 
 
