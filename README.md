@@ -4,7 +4,8 @@
 A step by step walk-though guide for developing RESTfull web services using Spring Data Rest.  
 
 Spring Data REST is a very nice tool to develop HTTP Resources with minimum boilerplate code.
-Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your repositories and expose them as a REST Endpoints.
+Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your repositories and expose them as a REST Endpoints. For more details go to
+[Spring Data REST official guide](https://docs.spring.io/spring-data/rest/docs/current/reference/html/)
 
 
 [How to expose an HTTP REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-expose-an-http-rest-resource)
