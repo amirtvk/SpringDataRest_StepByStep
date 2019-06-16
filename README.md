@@ -1207,7 +1207,7 @@ Date: Sat, 15 Jun 2019 12:13:47 GMT
 Now client A doesn't have last version of the resource. Client A wants to update the resource if he has the last version. In this situations `If-Match` header comes to rescue, 
 so client A fill `If-Match` with the last version (ETag) of resource that he/she has and send the update request.
 
-``javascript
+```javascript
 
 curl -X PATCH http://127.0.0.1:7000/comments/1   -H 'Content-Type: application/json'  -H 'If-Match: 0' -d '{"text" : "my comment is edited by Client A"}' -sw %{http_code}
 412
