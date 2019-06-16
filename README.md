@@ -51,7 +51,7 @@ Spring Data REST is a subproject of Spring data. Spring Data Rest Analyze your r
 
 [How to define an excerpt for a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-define-an-excerpt-for-a-rest-resource)
 
-[How to add enumerations fields to a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-enumerations-fields-to-a-rest-resource?)
+[How to add enumerations fields to a REST resource?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-add-enumerations-fields-to-a-rest-resource)
 
 [How to use ETag header in Spring Data REST?](https://github.com/amirtvk/SpringDataRest_StepByStep#how-to-use-ETag-header-in-spring-data-rest)
 
@@ -178,7 +178,7 @@ After running this command we got a `201` response code which means the resource
 
 **********
 
-### How to use GET and HEAD method for a repository?
+### How to use GET and HEAD method on a repository?
 
 Get method get one or list of resources. if you want to get list of all resources in a repository simply sent a `GET` request to the repository.
 
